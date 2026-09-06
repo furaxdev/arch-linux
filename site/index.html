@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Fritax Arch Setup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --accent: #1793D1;
+    --accent-fonce: #0F6FA3;
+    --fond: #0B0D10;
+    --fond-carte: #14171C;
+    --bordure: #262B33;
+    --texte: #F2F4F7;
+    --texte-gris: #9AA3AF;
+    --vert-matrix: #00ff41;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--fond);
+    color: var(--texte);
+    font-family: "Inter", -apple-system, "Segoe UI", sans-serif;
+    line-height: 1.5;
+  }
+  a { color: inherit; }
+  .conteneur { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- Header ---------- */
+  header {
+    position: sticky; top: 0; z-index: 10;
+    background: rgba(11,13,16,0.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--bordure);
+  }
+  header .conteneur { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .logo-nav { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 15px; }
+  .logo-nav img { width: 26px; height: 26px; border-radius: 50%; background: #fff; padding: 3px; }
+  nav a {
+    text-decoration: none; color: var(--texte-gris); font-size: 14px; font-weight: 500;
+    margin-left: 28px; transition: color .15s;
+  }
+  nav a:hover { color: var(--texte); }
+
+  /* ---------- Hero ---------- */
+  .hero { padding: 100px 0 70px; text-align: center; }
+  .badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--fond-carte); border: 1px solid var(--bordure);
+    padding: 6px 14px; border-radius: 999px; font-size: 13px; color: var(--texte-gris);
+    margin-bottom: 28px;
+  }
+  .badge span.point { width: 7px; height: 7px; border-radius: 50%; background: var(--vert-matrix); display: inline-block; }
+  h1 { font-size: 52px; font-weight: 800; margin: 0 0 18px; letter-spacing: -1px; }
+  h1 .accent { color: var(--accent); }
+  .hero p.sous { font-size: 18px; color: var(--texte-gris); max-width: 620px; margin: 0 auto 40px; }
+
+  .cta-row { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-bottom: 18px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 14px 26px; border-radius: 999px; font-weight: 700; font-size: 15px;
+    text-decoration: none; cursor: pointer; border: 1px solid transparent; transition: transform .15s, background .15s;
+  }
+  .btn:hover { transform: translateY(-1px); }
+  .btn-primaire { background: var(--accent); color: #fff; }
+  .btn-primaire:hover { background: var(--accent-fonce); }
+  .btn-secondaire { background: transparent; color: var(--texte); border-color: var(--bordure); }
+  .btn-secondaire:hover { background: var(--fond-carte); }
+  .avertissement-mini { font-size: 13px; color: #d99a3f; }
+
+  /* ---------- Sélecteur CPU ---------- */
+  .selecteur {
+    max-width: 420px; margin: 46px auto 0;
+    background: var(--fond-carte); border: 1px solid var(--bordure); border-radius: 16px;
+    padding: 20px;
+  }
+  .selecteur p { margin: 0 0 12px; font-size: 13px; color: var(--texte-gris); font-weight: 600; text-transform: uppercase; letter-spacing: .05em; }
+  .cpu-toggle { display: flex; gap: 10px; }
+  .cpu-btn {
+    flex: 1; padding: 12px; border-radius: 10px; border: 1px solid var(--bordure);
+    background: #1a1e24; color: var(--texte-gris); font-weight: 600; cursor: pointer; font-size: 14px;
+    transition: all .15s;
+  }
+  .cpu-btn.actif { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  /* ---------- Sections génériques ---------- */
+  section { padding: 90px 0; border-top: 1px solid var(--bordure); }
+  .eyebrow { color: var(--accent); font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 10px; }
+  h2 { font-size: 34px; font-weight: 800; margin: 0 0 14px; letter-spacing: -0.5px; }
+  section > .conteneur > p.intro { color: var(--texte-gris); font-size: 16px; max-width: 600px; margin: 0 0 50px; }
+
+  /* ---------- Features grid ---------- */
+  .grille-features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .carte-feature {
+    background: var(--fond-carte); border: 1px solid var(--bordure); border-radius: 16px; padding: 26px;
+  }
+  .carte-feature .icone { font-size: 26px; margin-bottom: 14px; }
+  .carte-feature h3 { font-size: 16px; margin: 0 0 8px; }
+  .carte-feature p { font-size: 14px; color: var(--texte-gris); margin: 0; }
+
+  /* ---------- Captures / mockups ---------- */
+  .mockups { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .mockup {
+    border-radius: 14px; overflow: hidden; border: 1px solid var(--bordure);
+    background: #fff; aspect-ratio: 16/10.5;
+  }
+  .mockup .barre { height: 30px; background: #1a1a1a; display: flex; align-items: center; padding: 0 12px; gap: 6px; }
+  .mockup .barre .pt { width: 9px; height: 9px; border-radius: 50%; }
+  .mockup-clair { display: flex; height: calc(100% - 30px); }
+  .mockup-cote { width: 34%; background: var(--accent); display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff; }
+  .mockup-cote .rond { width: 46px; height: 46px; border-radius: 50%; background: #fff; margin-bottom: 10px; display:flex; align-items:center; justify-content:center; font-size: 20px; }
+  .mockup-cote strong { font-size: 12px; }
+  .mockup-corps { flex: 1; padding: 18px; background: #fff; color: #111; }
+  .mockup-corps .titre { font-size: 15px; font-weight: 800; margin-bottom: 12px; }
+  .mockup-ligne { height: 30px; border-radius: 8px; border: 1px solid #eee; margin-bottom: 8px; }
+  .mockup-sombre { height: calc(100% - 30px); background: #000; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+  .mockup-sombre .panneau {
+    background: #04120a; border: 1px solid #0a8a2a; border-radius: 12px; padding: 18px 26px; text-align: center; z-index: 2;
+  }
+  .mockup-sombre .panneau p { color: var(--vert-matrix); font-size: 11px; font-weight: 700; margin: 0 0 10px; }
+  .mockup-sombre .barre-prog { width: 180px; height: 8px; border: 1px solid var(--vert-matrix); border-radius: 6px; overflow: hidden; margin: 0 auto; }
+  .mockup-sombre .barre-prog span { display: block; width: 62%; height: 100%; background: var(--vert-matrix); }
+  .mockup-sombre canvas { position: absolute; inset: 0; opacity: .5; }
+
+  /* ---------- Étapes doc ---------- */
+  .etapes-doc { display: flex; flex-direction: column; gap: 0; }
+  .etape-doc { display: flex; gap: 20px; padding: 26px 0; border-bottom: 1px solid var(--bordure); }
+  .etape-doc:last-child { border-bottom: none; }
+  .etape-doc .num {
+    flex-shrink: 0; width: 34px; height: 34px; border-radius: 50%; background: var(--accent);
+    color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px;
+  }
+  .etape-doc h4 { margin: 0 0 6px; font-size: 16px; }
+  .etape-doc p { margin: 0; color: var(--texte-gris); font-size: 14px; }
+  .etape-doc code { background: #1a1e24; padding: 2px 7px; border-radius: 5px; font-size: 13px; }
+
+  /* ---------- Raccourcis ---------- */
+  .raccourcis-liste { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .raccourci-item {
+    display: flex; justify-content: space-between; align-items: center;
+    background: var(--fond-carte); border: 1px solid var(--bordure); border-radius: 10px; padding: 14px 16px;
+    font-size: 14px;
+  }
+  .raccourci-item code { color: var(--vert-matrix); font-size: 12px; }
+
+  /* ---------- Footer ---------- */
+  footer { padding: 50px 0; text-align: center; color: var(--texte-gris); font-size: 13px; }
+  footer a { color: var(--accent); text-decoration: none; font-weight: 600; }
+
+  @media (max-width: 760px) {
+    h1 { font-size: 34px; }
+    .grille-features, .mockups, .raccourcis-liste { grid-template-columns: 1fr; }
+    section { padding: 60px 0; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="conteneur">
+    <div class="logo-nav">
+      <img src="https://images.icon-icons.com/2108/PNG/512/archlinux_icon_130988.png" alt="Arch Linux" onerror="this.style.display='none'">
+      Fritax Arch Setup
+    </div>
+    <nav>
+      <a href="#fonctionnalites">Fonctionnalités</a>
+      <a href="#demo">Aperçu</a>
+      <a href="#installation">Installation</a>
+      <a href="#raccourcis">Raccourcis</a>
+      <a href="https://github.com/furaxdev/arch-linux" target="_blank" rel="noopener">GitHub ↗</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="conteneur">
+    <div class="badge"><span class="point"></span> Sans clé USB · 100% gratuit · Open source</div>
+    <h1>Remplace Windows par<br><span class="accent">Arch Linux</span>, en un clic.</h1>
+    <p class="sous">
+      Fritax Arch Setup télécharge et personnalise Arch Linux, prépare un démarrage
+      directement depuis ton disque dur (aucune clé USB nécessaire), et installe un
+      système de secours au cas où. Le tout en français, avec une petite pluie Matrix. 🌧️
+    </p>
+
+    <div class="cta-row">
+      <a id="bouton-telecharger" class="btn btn-primaire" href="#" target="_blank" rel="noopener">
+        ⬇️ Télécharger ArchInstallerFritax.exe
+      </a>
+      <a class="btn btn-secondaire" href="https://github.com/furaxdev/arch-linux" target="_blank" rel="noopener">
+        📂 Voir le code source
+      </a>
+    </div>
+    <p class="avertissement-mini">⚠️ Remplace entièrement Windows sur le disque choisi — sauvegarde tes fichiers avant.</p>
+
+    <div class="selecteur">
+      <p>Choisis ton processeur</p>
+      <div class="cpu-toggle">
+        <button class="cpu-btn actif" data-cpu="amd">🟠 AMD</button>
+        <button class="cpu-btn" data-cpu="intel">🔵 Intel</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="fonctionnalites">
+  <div class="conteneur">
+    <div class="eyebrow">Fonctionnalités</div>
+    <h2>Tout est automatisé</h2>
+    <p class="intro">Une seule application Windows s'occupe de tout, du téléchargement de l'ISO jusqu'au système de secours.</p>
+    <div class="grille-features">
+      <div class="carte-feature"><div class="icone">📡</div><h3>Téléchargement officiel</h3><p>Récupère et vérifie (SHA-256) l'ISO Arch Linux directement depuis les miroirs officiels.</p></div>
+      <div class="carte-feature"><div class="icone">🥾</div><h3>Sans clé USB</h3><p>Démarrage préparé directement depuis le disque dur via GRUB (loopback) et une entrée UEFI dédiée.</p></div>
+      <div class="carte-feature"><div class="icone">🎨</div><h3>Personnalisation</h3><p>Nom de PC et utilisateur préconfigurés automatiquement, sans toucher au reste de l'ISO.</p></div>
+      <div class="carte-feature"><div class="icone">🚑</div><h3>Système de secours</h3><p>Une partition de réparation dédiée est créée avec sa propre entrée dans le menu de démarrage.</p></div>
+      <div class="carte-feature"><div class="icone">🇫🇷</div><h3>Tout en français</h3><p>Interface, scripts d'installation et raccourcis, entièrement en français avec des emojis.</p></div>
+      <div class="carte-feature"><div class="icone">🔧</div><h3>Raccourcis pratiques</h3><p>Mise à jour, installation de logiciels, infos système... accessibles en un clic après l'installation.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="demo">
+  <div class="conteneur">
+    <div class="eyebrow">Aperçu</div>
+    <h2>Une vraie interface, pas un script en ligne de commande</h2>
+    <p class="intro">Panneau latéral avec le logo Arch Linux, puis une pluie Matrix plein écran pendant l'installation.</p>
+    <div class="mockups">
+      <div class="mockup">
+        <div class="barre"><div class="pt" style="background:#ff5f57"></div><div class="pt" style="background:#febc2e"></div><div class="pt" style="background:#28c840"></div></div>
+        <div class="mockup-clair">
+          <div class="mockup-cote"><div class="rond">🐧</div><strong>Fritax Arch Setup</strong></div>
+          <div class="mockup-corps">
+            <div class="titre">Coucou :) Bienvenue ! 😄</div>
+            <div class="mockup-ligne"></div>
+            <div class="mockup-ligne"></div>
+            <div class="mockup-ligne" style="width:60%"></div>
+          </div>
+        </div>
+      </div>
+      <div class="mockup">
+        <div class="barre"><div class="pt" style="background:#ff5f57"></div><div class="pt" style="background:#febc2e"></div><div class="pt" style="background:#28c840"></div></div>
+        <div class="mockup-sombre">
+          <canvas id="pluie"></canvas>
+          <div class="panneau">
+            <p>Nous installons votre système...<br>(et dis merci à eden :3) 💚</p>
+            <div class="barre-prog"><span></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="installation">
+  <div class="conteneur">
+    <div class="eyebrow">Installation</div>
+    <h2>Comment ça marche</h2>
+    <p class="intro">Quatre étapes, aucune clé USB.</p>
+    <div class="etapes-doc">
+      <div class="etape-doc">
+        <div class="num">1</div>
+        <div><h4>Lance l'application sur Windows</h4><p>En tant qu'administrateur : télécharge, personnalise l'ISO et prépare le démarrage sans clé USB.</p></div>
+      </div>
+      <div class="etape-doc">
+        <div class="num">2</div>
+        <div><h4>Redémarre</h4><p>Choisis l'entrée <code>Fritax - Installer Arch Linux 🐧</code> dans le menu de démarrage.</p></div>
+      </div>
+      <div class="etape-doc">
+        <div class="num">3</div>
+        <div><h4>Installation automatique</h4><p>Lance <code>scripts/install_arch.sh</code> : partitionnement, installation, GRUB, système de secours. Une confirmation explicite est demandée avant d'effacer le disque.</p></div>
+      </div>
+      <div class="etape-doc">
+        <div class="num">4</div>
+        <div><h4>C'est prêt !</h4><p>Utilise les raccourcis <code>~/raccourcis-fritax.sh</code> pour les tâches courantes.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="raccourcis">
+  <div class="conteneur">
+    <div class="eyebrow">Raccourcis</div>
+    <h2>Après l'installation</h2>
+    <p class="intro">Un petit menu en français pour les commandes du quotidien.</p>
+    <div class="raccourcis-liste">
+      <div class="raccourci-item">🔄 Faire une mise à jour <code>sudo pacman -Syu</code></div>
+      <div class="raccourci-item">📦 Installer un logiciel <code>sudo pacman -S ...</code></div>
+      <div class="raccourci-item">🧹 Nettoyer le cache <code>sudo pacman -Sc</code></div>
+      <div class="raccourci-item">🌐 Adresse IP <code>ip a</code></div>
+      <div class="raccourci-item">🖥️ Infos système <code>neofetch</code></div>
+      <div class="raccourci-item">🚑 Démarrer sur le secours <code>reboot --boot-loader-entry=...</code></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="conteneur">
+    ⚠️ Remplace entièrement Windows — sauvegarde tes fichiers avant d'installer.<br><br>
+    Code source sur <a href="https://github.com/furaxdev/arch-linux" target="_blank" rel="noopener">GitHub</a> · Merci à eden :3
+  </div>
+</footer>
+
+<script>
+  const LIENS = {
+    amd:   "https://github.com/furaxdev/arch-linux/releases/download/amd64-x86-latest/ArchInstallerFritax.exe",
+    intel: "https://github.com/furaxdev/arch-linux/releases/download/intel64-x86-latest/ArchInstallerFritax.exe",
+  };
+  const boutons = document.querySelectorAll(".cpu-btn");
+  const lienDl = document.getElementById("bouton-telecharger");
+  function choisir(cpu) {
+    boutons.forEach(b => b.classList.toggle("actif", b.dataset.cpu === cpu));
+    lienDl.href = LIENS[cpu];
+    try { localStorage.setItem("fritax_cpu", cpu); } catch (e) {}
+  }
+  boutons.forEach(b => b.addEventListener("click", () => choisir(b.dataset.cpu)));
+  let cpuInitial = "amd";
+  try { cpuInitial = localStorage.getItem("fritax_cpu") || "amd"; } catch (e) {}
+  choisir(cpuInitial);
+
+  // Petite pluie Matrix décorative dans le mockup sombre
+  const canvas = document.getElementById("pluie");
+  const ctx = canvas.getContext("2d");
+  function redimensionner() {
+    canvas.width = canvas.parentElement.clientWidth;
+    canvas.height = canvas.parentElement.clientHeight;
+  }
+  redimensionner();
+  window.addEventListener("resize", redimensionner);
+  const taille = 14;
+  let colonnes = Math.ceil(canvas.width / taille);
+  let gouttes = new Array(colonnes).fill(0);
+  const car = "アイウエオカキクケコ0123456789";
+  function tick() {
+    ctx.fillStyle = "rgba(0,0,0,0.15)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "#00ff41";
+    ctx.font = taille + "px monospace";
+    for (let i = 0; i < gouttes.length; i++) {
+      const texte = car[Math.floor(Math.random() * car.length)];
+      ctx.fillText(texte, i * taille, gouttes[i] * taille);
+      if (gouttes[i] * taille > canvas.height && Math.random() > 0.975) gouttes[i] = 0;
+      gouttes[i]++;
+    }
+    requestAnimationFrame(tick);
+  }
+  tick();
+</script>
+
+</body>
+</html>
