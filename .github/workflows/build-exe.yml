@@ -15,6 +15,11 @@ jobs:
       - name: Récupération du code
         uses: actions/checkout@v4
 
+      - name: Nom de branche sécurisé (sans "/")
+        id: branche
+        shell: bash
+        run: echo "safe=$(echo '${{ github.ref_name }}' | tr '/' '-')" >> "$GITHUB_OUTPUT"
+
       - name: Installation de Python
         uses: actions/setup-python@v5
         with:
@@ -36,6 +41,6 @@ jobs:
       - name: Publication de l'exécutable (artifact téléchargeable)
         uses: actions/upload-artifact@v4
         with:
-          name: ArchInstallerFritax-${{ github.ref_name }}
+          name: ArchInstallerFritax-${{ steps.branche.outputs.safe }}
           path: windows_installer/dist/ArchInstallerFritax.exe
           retention-days: 30
