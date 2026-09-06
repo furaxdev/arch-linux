@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # =============================================================================
-#  Installe le thème de démarrage Plymouth "Fritax" (logo Arch + barre de
-#  progression verte façon Matrix) sur le système Arch installé.
+#  Installe le thème de démarrage Plymouth "Fritax" (spinner hexagonal animé,
+#  adapté de adi1090x/plymouth-themes, + barre de progression discrète) sur
+#  le système Arch installé.
 #
 #  À exécuter APRÈS install_arch.sh, soit :
 #    - directement sur le système installé (après le premier redémarrage), ou
@@ -21,7 +22,7 @@ pacman -Sy --needed --noconfirm plymouth
 mkdir -p "$THEME_DIR"
 cp "$SRC_DIR/fritax.plymouth" "$THEME_DIR/"
 cp "$SRC_DIR/fritax.script" "$THEME_DIR/"
-cp "$SRC_DIR/logo.png" "$THEME_DIR/"
+cp "$SRC_DIR"/progress-*.png "$THEME_DIR/"
 
 echo "🖌️ Activation du thème..."
 plymouth-set-default-theme -R fritax
