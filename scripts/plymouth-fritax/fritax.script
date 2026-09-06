@@ -1,0 +1,63 @@
+// Thème Plymouth "Fritax" — logo Arch + barre de progression verte façon Matrix.
+
+Window.SetBackgroundTopColor(0.02, 0.02, 0.02);
+Window.SetBackgroundBottomColor(0.0, 0.0, 0.0);
+
+screen_width  = Window.GetWidth();
+screen_height = Window.GetHeight();
+
+// --- Logo Arch Linux, centré, redimensionné ---
+logo.image = Image("logo.png");
+logo.scale = 0.28;
+logo.sprite = Sprite(logo.image.Scale(logo.image.GetWidth() * logo.scale,
+                                      logo.image.GetHeight() * logo.scale));
+logo.sprite.SetX(screen_width / 2 - logo.image.GetWidth() * logo.scale / 2);
+logo.sprite.SetY(screen_height / 2 - logo.image.GetHeight() * logo.scale / 2 - 70);
+
+// --- Message ---
+message.image = Image.Text("Nous démarrons Arch Linux... (et dis merci à eden :3)", 0, 1, 0.25, 1, "Sans 14");
+message.sprite = Sprite(message.image);
+message.sprite.SetX(screen_width / 2 - message.image.GetWidth() / 2);
+message.sprite.SetY(screen_height / 2 + 60);
+
+// --- Cadre de la barre de progression ---
+bar_width  = 360;
+bar_height = 22;
+bar_x = screen_width / 2 - bar_width / 2;
+bar_y = screen_height / 2 + 100;
+
+bar_bg.image = Image(bar_width, bar_height);
+bar_bg.image.Clear(0.02, 0.05, 0.02, 1);
+bar_bg.sprite = Sprite(bar_bg.image);
+bar_bg.sprite.SetX(bar_x);
+bar_bg.sprite.SetY(bar_y);
+
+// --- Remplissage de la barre (mis à jour selon la progression du boot) ---
+fun progress_callback(duration, progress) {
+    fill_width = Math.Int(bar_width * progress);
+    if (fill_width < 2) fill_width = 2;
+
+    fill.image = Image(fill_width, bar_height);
+    fill.image.Clear(0.0, 1.0, 0.25, 1);
+
+    if (fill.sprite) fill.sprite.SetImage(fill.image);
+    else {
+        fill.sprite = Sprite(fill.image);
+        fill.sprite.SetX(bar_x);
+        fill.sprite.SetY(bar_y);
+        fill.sprite.SetZ(1);
+    }
+}
+Plymouth.SetBootProgressFunction(progress_callback);
+
+// --- Écran de mot de passe (LUKS, etc.) au cas où ---
+fun display_password_callback(prompt, bullets) {
+    if (!password_sprite) {
+        password_sprite = Sprite();
+        password_sprite.SetX(screen_width / 2);
+        password_sprite.SetY(screen_height / 2 + 150);
+    }
+    password_image = Image.Text(prompt, 0, 1, 0.25, 1);
+    password_sprite.SetImage(password_image);
+}
+Plymouth.SetDisplayPasswordFunction(display_password_callback);
