@@ -1,6 +1,9 @@
-# Aucune dépendance Python externe : tout repose sur la bibliothèque standard
-# (tkinter, urllib, subprocess, hashlib).
+# Dépendances Python pour lancer l'app en script :
+# aucune (tout repose sur la bibliothèque standard : tkinter, urllib, subprocess, hashlib).
 #
+# Dépendance pour fabriquer l'exécutable .exe (voir build_exe.bat) :
+pyinstaller>=6.0
+
 # Outils externes nécessaires sur la machine Windows :
 #   - 7-Zip            https://www.7-zip.org/           (extraction/reconstruction de l'ISO)
 #   - Windows ADK       (Deployment Tools / oscdimg.exe) https://learn.microsoft.com/windows-hardware/get-started/adk-install

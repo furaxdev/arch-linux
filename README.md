@@ -26,7 +26,33 @@ secours, et des raccourcis pratiques.
 
 ## 🚀 Utilisation
 
+### 0. 📦 Obtenir le fichier .exe (deux options)
+
+**Option A — GitHub Actions (automatique) :** chaque push déclenche le
+workflow `.github/workflows/build-exe.yml`, qui compile l'application sur un
+runner Windows. Va dans l'onglet **Actions** du dépôt → dernier run
+**"🐧 Build ArchInstallerFritax.exe"** → télécharge l'artifact
+`ArchInstallerFritax-<branche>.exe`.
+
+**Option B — Compiler toi-même sur Windows :**
+
+```powershell
+cd windows_installer
+build_exe.bat
+```
+
+Le fichier `dist\ArchInstallerFritax.exe` est généré (demande automatiquement
+les droits administrateur au démarrage, grâce à `--uac-admin`).
+
 ### 1. Sur Windows (préparation, sans clé USB)
+
+Directement avec l'exécutable :
+
+```powershell
+ArchInstallerFritax.exe
+```
+
+Ou en lançant le script Python :
 
 ```powershell
 cd windows_installer
