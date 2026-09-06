@@ -1,63 +1,121 @@
-// Thème Plymouth "Fritax" — logo Arch + barre de progression verte façon Matrix.
+## Thème "Fritax" — spinner hexagonal adapté de adi1090x/plymouth-themes
+## (pack_2/hexagon, licence dans LICENSE-hexagon-theme) + barre de progression.
 
-Window.SetBackgroundTopColor(0.02, 0.02, 0.02);
-Window.SetBackgroundBottomColor(0.0, 0.0, 0.0);
+screen.w = Window.GetWidth(0);
+screen.h = Window.GetHeight(0);
+screen.half.w = Window.GetWidth(0) / 2;
+screen.half.h = Window.GetHeight(0) / 2;
 
-screen_width  = Window.GetWidth();
-screen_height = Window.GetHeight();
+question = null;
+answer = null;
+message = null;
+bullets = null;
+prompt = null;
+bullet.image = Image.Text("*", 1, 1, 1);
 
-// --- Logo Arch Linux, centré, redimensionné ---
-logo.image = Image("logo.png");
-logo.scale = 0.28;
-logo.sprite = Sprite(logo.image.Scale(logo.image.GetWidth() * logo.scale,
-                                      logo.image.GetHeight() * logo.scale));
-logo.sprite.SetX(screen_width / 2 - logo.image.GetWidth() * logo.scale / 2);
-logo.sprite.SetY(screen_height / 2 - logo.image.GetHeight() * logo.scale / 2 - 70);
+state.status = "play";
+state.time = 0.0;
 
-// --- Message ---
-message.image = Image.Text("Nous démarrons Arch Linux... (et dis merci à eden :3)", 0, 1, 0.25, 1, "Sans 14");
-message.sprite = Sprite(message.image);
-message.sprite.SetX(screen_width / 2 - message.image.GetWidth() / 2);
-message.sprite.SetY(screen_height / 2 + 60);
+//--------------------------------- Spinner hexagonal (animation) --------------------------
 
-// --- Cadre de la barre de progression ---
-bar_width  = 360;
-bar_height = 22;
-bar_x = screen_width / 2 - bar_width / 2;
-bar_y = screen_height / 2 + 100;
+for (i = 0; i < 16; i++)
+  hex_image[i] = Image("progress-" + i + ".png");
+hex_sprite = Sprite();
 
-bar_bg.image = Image(bar_width, bar_height);
-bar_bg.image.Clear(0.02, 0.05, 0.02, 1);
-bar_bg.sprite = Sprite(bar_bg.image);
-bar_bg.sprite.SetX(bar_x);
-bar_bg.sprite.SetY(bar_y);
+hex_sprite.SetX(Window.GetX() + (screen.w / 2 - hex_image[0].GetWidth() / 2));
+hex_sprite.SetY(Window.GetY() + (screen.h / 2 - hex_image[0].GetHeight() / 2) - 20);
 
-// --- Remplissage de la barre (mis à jour selon la progression du boot) ---
+anim_frame = 0;
+
+fun refresh_callback() {
+    hex_sprite.SetImage(hex_image[Math.Int(anim_frame / 2) % 16]);
+    anim_frame++;
+}
+Plymouth.SetRefreshFunction(refresh_callback);
+
+//--------------------------------- Barre de progression discrète --------------------------
+
+bar.width  = 280;
+bar.height = 4;
+bar.x = screen.half.w - bar.width / 2;
+bar.y = screen.half.h + hex_image[0].GetHeight() / 2 + 30;
+
+bar.bg_image = Image(bar.width, bar.height);
+bar.bg_image.Clear(0.35, 0.35, 0.35, 1);
+bar.bg_sprite = Sprite(bar.bg_image);
+bar.bg_sprite.SetX(bar.x);
+bar.bg_sprite.SetY(bar.y);
+
 fun progress_callback(duration, progress) {
-    fill_width = Math.Int(bar_width * progress);
-    if (fill_width < 2) fill_width = 2;
+    fill_width = Math.Int(bar.width * progress);
+    if (fill_width < 1) fill_width = 1;
 
-    fill.image = Image(fill_width, bar_height);
-    fill.image.Clear(0.0, 1.0, 0.25, 1);
+    bar.fill_image = Image(fill_width, bar.height);
+    bar.fill_image.Clear(1, 1, 1, 1);
 
-    if (fill.sprite) fill.sprite.SetImage(fill.image);
+    if (bar.fill_sprite)
+        bar.fill_sprite.SetImage(bar.fill_image);
     else {
-        fill.sprite = Sprite(fill.image);
-        fill.sprite.SetX(bar_x);
-        fill.sprite.SetY(bar_y);
-        fill.sprite.SetZ(1);
+        bar.fill_sprite = Sprite(bar.fill_image);
+        bar.fill_sprite.SetX(bar.x);
+        bar.fill_sprite.SetY(bar.y);
+        bar.fill_sprite.SetZ(1);
     }
 }
 Plymouth.SetBootProgressFunction(progress_callback);
 
-// --- Écran de mot de passe (LUKS, etc.) au cas où ---
-fun display_password_callback(prompt, bullets) {
-    if (!password_sprite) {
-        password_sprite = Sprite();
-        password_sprite.SetX(screen_width / 2);
-        password_sprite.SetY(screen_height / 2 + 150);
-    }
-    password_image = Image.Text(prompt, 0, 1, 0.25, 1);
-    password_sprite.SetImage(password_image);
+//------------------------------------- Question / mot de passe -------------------------------
+fun DisplayQuestionCallback(prompt, entry) {
+    question = null;
+    answer = null;
+
+    if (entry == "")
+        entry = "<answer>";
+
+    question.image = Image.Text(prompt, 1, 1, 1);
+    question.sprite = Sprite(question.image);
+    question.sprite.SetX(screen.half.w - question.image.GetWidth() / 2);
+    question.sprite.SetY(screen.h - 4 * question.image.GetHeight());
+
+    answer.image = Image.Text(entry, 1, 1, 1);
+    answer.sprite = Sprite(answer.image);
+    answer.sprite.SetX(screen.half.w - answer.image.GetWidth() / 2);
+    answer.sprite.SetY(screen.h - 2 * answer.image.GetHeight());
 }
-Plymouth.SetDisplayPasswordFunction(display_password_callback);
+Plymouth.SetDisplayQuestionFunction(DisplayQuestionCallback);
+
+fun DisplayPasswordCallback(nil, bulletCount) {
+    state.status = "pause";
+    totalWidth = bulletCount * bullet.image.GetWidth();
+    startPos = screen.half.w - totalWidth / 2;
+
+    prompt.image = Image.Text("Mot de passe", 1, 1, 1);
+    prompt.sprite = Sprite(prompt.image);
+    prompt.sprite.SetX(screen.half.w - prompt.image.GetWidth() / 2);
+    prompt.sprite.SetY(screen.h - 4 * prompt.image.GetHeight());
+
+    bullets = null;
+    for (i = 0; i < bulletCount; i++) {
+        bullets[i].sprite = Sprite(bullet.image);
+        bullets[i].sprite.SetX(startPos + i * bullet.image.GetWidth());
+        bullets[i].sprite.SetY(screen.h - 2 * bullet.image.GetHeight());
+    }
+}
+Plymouth.SetDisplayPasswordFunction(DisplayPasswordCallback);
+
+fun DisplayNormalCallback() {
+    state.status = "play";
+    bullets = null;
+    prompt = null;
+    message = null;
+    question = null;
+    answer = null;
+}
+Plymouth.SetDisplayNormalFunction(DisplayNormalCallback);
+
+fun MessageCallback(text) {
+    message.image = Image.Text(text, 1, 1, 1);
+    message.sprite = Sprite(message.image);
+    message.sprite.SetPosition(screen.half.w - message.image.GetWidth() / 2, message.image.GetHeight());
+}
+Plymouth.SetMessageFunction(MessageCallback);

@@ -133,6 +133,11 @@ etape 80 "Installation de GRUB (démarrage principal)..."
 arch-chroot /mnt grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=Fritax
 arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
 
+etape 85 "🎨 Installation du thème de démarrage Plymouth..."
+cp -r "$(dirname "$0")" /mnt/root/fritax-scripts
+arch-chroot /mnt bash /root/fritax-scripts/setup_plymouth.sh
+rm -rf /mnt/root/fritax-scripts
+
 etape 90 "Préparation du système de secours 'Fritax-Secours' 🚑..."
 bash "$(dirname "$0")/setup_rescue.sh" "$P3"
 
