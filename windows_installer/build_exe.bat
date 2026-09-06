@@ -12,7 +12,8 @@ python -m pip install -r requirements.txt
 
 echo.
 echo Construction de l'executable...
-python -m PyInstaller --noconfirm --onefile --windowed --uac-admin ^
+python -m PyInstaller --noconfirm --onefile --windowed --uac-admin --noupx ^
+    --version-file version_info.txt ^
     --name ArchInstallerFritax ^
     ArchInstallerFritax.py
 
