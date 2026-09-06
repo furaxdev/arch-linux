@@ -37,7 +37,8 @@ jobs:
       - name: Construction de l'exécutable
         working-directory: windows_installer
         run: |
-          python -m PyInstaller --noconfirm --onefile --windowed --uac-admin `
+          python -m PyInstaller --noconfirm --onefile --windowed --uac-admin --noupx `
+            --version-file version_info.txt `
             --name ArchInstallerFritax `
             ArchInstallerFritax.py
 
