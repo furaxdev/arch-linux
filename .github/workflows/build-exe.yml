@@ -8,6 +8,9 @@ on:
       - ".github/workflows/build-exe.yml"
   workflow_dispatch: {}
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: windows-latest
@@ -44,3 +47,17 @@ jobs:
           name: ArchInstallerFritax-${{ steps.branche.outputs.safe }}
           path: windows_installer/dist/ArchInstallerFritax.exe
           retention-days: 30
+
+      # Lien de téléchargement public et stable (utilisé par le site vitrine),
+      # uniquement pour les branches AMD/Intel (pas pour les branches de dev).
+      - name: Publication en tant que GitHub Release (lien public stable)
+        if: github.ref_name == 'amd64-x86' || github.ref_name == 'intel64-x86'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}-latest
+          name: Fritax Arch Setup — ${{ github.ref_name }}
+          body: |
+            Dernière version compilée automatiquement depuis la branche `${{ github.ref_name }}`.
+            Commit : ${{ github.sha }}
+          files: windows_installer/dist/ArchInstallerFritax.exe
+          make_latest: false
