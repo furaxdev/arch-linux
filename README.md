@@ -66,6 +66,18 @@ build_exe.bat
 Le fichier `dist\ArchInstallerFritax.exe` est généré (demande automatiquement
 les droits administrateur au démarrage, grâce à `--uac-admin`).
 
+> ⚠️ **Windows Defender peut signaler l'exe** (ex: `Trojan:Win32/Sabsik.EN.D!ml`).
+> C'est un **faux positif très courant** sur les exécutables PyInstaller non
+> signés (détection heuristique par IA, pas une signature de virus connu —
+> le `!ml` dans le nom l'indique). Le code source est entièrement visible
+> dans ce dépôt. Pour continuer :
+> 1. Clique sur "Plus d'infos" → "Exécuter quand même" dans l'alerte SmartScreen, ou
+> 2. Restaure le fichier en PowerShell admin :
+>    `Add-MpPreference -ExclusionPath "chemin\vers\ArchInstallerFritax.exe"`
+>    puis `"%ProgramFiles%\Windows Defender\MpCmdRun.exe" -Restore -All`
+> 3. (Optionnel) Signale le faux positif à Microsoft :
+>    https://www.microsoft.com/en-us/wdsi/filesubmission
+
 ### 1. Sur Windows (préparation, sans clé USB)
 
 Directement avec l'exécutable :
