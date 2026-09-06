@@ -18,6 +18,10 @@ python -m PyInstaller --noconfirm --onefile --windowed --uac-admin --noupx ^
     ArchInstallerFritax.py
 
 echo.
+echo Signature de l'executable (certificat auto-signe "FuraxDev")...
+powershell -ExecutionPolicy Bypass -File sign_exe.ps1 -ExePath dist\ArchInstallerFritax.exe -Publisher FuraxDev
+
+echo.
 echo Termine ! L'executable se trouve dans dist\ArchInstallerFritax.exe
 echo Clic droit dessus -^> "Executer en tant qu'administrateur" pour le lancer.
 pause

@@ -42,6 +42,11 @@ jobs:
             --name ArchInstallerFritax `
             ArchInstallerFritax.py
 
+      - name: Signature de l'exécutable (certificat auto-signé "FuraxDev")
+        working-directory: windows_installer
+        shell: pwsh
+        run: ./sign_exe.ps1 -ExePath dist\ArchInstallerFritax.exe -Publisher FuraxDev
+
       - name: Publication de l'exécutable (artifact téléchargeable)
         uses: actions/upload-artifact@v4
         with:

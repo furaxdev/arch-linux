@@ -67,10 +67,14 @@ Le fichier `dist\ArchInstallerFritax.exe` est généré (demande automatiquement
 les droits administrateur au démarrage, grâce à `--uac-admin`).
 
 > ⚠️ **Windows Defender peut signaler l'exe** (ex: `Trojan:Win32/Sabsik.EN.D!ml`).
-> C'est un **faux positif très courant** sur les exécutables PyInstaller non
-> signés (détection heuristique par IA, pas une signature de virus connu —
-> le `!ml` dans le nom l'indique). Le code source est entièrement visible
-> dans ce dépôt. Pour continuer :
+> C'est un **faux positif très courant** sur les exécutables PyInstaller
+> (détection heuristique par IA, pas une signature de virus connu — le
+> `!ml` dans le nom l'indique). L'exe est signé avec un certificat
+> **auto-signé "FuraxDev"** (`windows_installer/sign_exe.ps1`), ce qui
+> identifie le publisher dans les propriétés du fichier mais **ne supprime
+> pas** l'alerte "Éditeur inconnu" (seul un certificat payant vérifié par
+> une autorité le ferait). Le code source est entièrement visible dans ce
+> dépôt. Pour continuer :
 > 1. Clique sur "Plus d'infos" → "Exécuter quand même" dans l'alerte SmartScreen, ou
 > 2. Restaure le fichier en PowerShell admin :
 >    `Add-MpPreference -ExclusionPath "chemin\vers\ArchInstallerFritax.exe"`
