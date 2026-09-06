@@ -1,0 +1,8 @@
+[Plymouth Theme]
+Name=Fritax
+Description=Thème de démarrage Fritax Arch Setup
+ModuleName=script
+
+[script]
+ImageDir=/usr/share/plymouth/themes/fritax
+ScriptFile=/usr/share/plymouth/themes/fritax/fritax.script
