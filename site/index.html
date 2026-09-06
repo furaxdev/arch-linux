@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js" crossorigin="anonymous"></script>
 <style>
   :root {
     --accent: #1793D1;
@@ -346,6 +347,13 @@
     requestAnimationFrame(tick);
   }
   tick();
+
+  // Convertit tous les emojis Unicode de la page en icônes Twemoji (style Discord)
+  twemoji.parse(document.body, {
+    folder: "svg",
+    ext: ".svg",
+    base: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/",
+  });
 </script>
 
 </body>
