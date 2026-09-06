@@ -1,0 +1,30 @@
+# Métadonnées Windows intégrées dans l'exécutable (aide certains antivirus
+# à ne pas le traiter comme un binaire anonyme non identifié).
+VSVersionInfo(
+  ffi=FixedFileInfo(
+    filevers=(1, 0, 0, 0),
+    prodvers=(1, 0, 0, 0),
+    mask=0x3f,
+    flags=0x0,
+    OS=0x40004,
+    fileType=0x1,
+    subtype=0x0,
+    date=(0, 0),
+  ),
+  kids=[
+    StringFileInfo(
+      [
+      StringTable(
+        u'040c04b0',
+        [StringStruct(u'CompanyName', u'Fritax'),
+        StringStruct(u'FileDescription', u'Installateur Arch Linux - Fritax Edition'),
+        StringStruct(u'FileVersion', u'1.0.0.0'),
+        StringStruct(u'InternalName', u'ArchInstallerFritax'),
+        StringStruct(u'LegalCopyright', u'Open source - MIT-like, voir le depot GitHub'),
+        StringStruct(u'OriginalFilename', u'ArchInstallerFritax.exe'),
+        StringStruct(u'ProductName', u'Fritax Arch Setup'),
+        StringStruct(u'ProductVersion', u'1.0.0.0')])
+      ]),
+    VarFileInfo([VarStruct(u'Translation', [1036, 1200])])
+  ]
+)
