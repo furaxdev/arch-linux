@@ -1,4 +1,4 @@
-# 🐧 Installateur Arch Linux — Fritax Edition ✨
+# <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f427.png" width="28" height="28" align="absmiddle"> Installateur Arch Linux — Fritax Edition <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/2728.png" width="24" height="24" align="absmiddle">
 
 Installateur "tout-en-un" pour remplacer Windows par Arch Linux sur l'Acer
 Aspire 5560 series (model no. MS2319), **sans clé USB**, avec une interface
@@ -20,14 +20,14 @@ secours, et des raccourcis pratiques.
   </a>
 </p>
 
-## 👀 Aperçu
+## <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f440.png" width="22" height="22" align="absmiddle"> Aperçu
 
 <p>
   <img src="docs/apercu-accueil.svg" width="49%" alt="Écran d'accueil de Fritax Arch Setup">
   <img src="docs/apercu-installation.svg" width="49%" alt="Écran d'installation avec pluie Matrix">
 </p>
 
-## ⚠️ Avertissements importants
+## <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/26a0.png" width="22" height="22" align="absmiddle"> Avertissements importants
 
 - Cette installation **efface complètement** le disque choisi, y compris
   Windows. **Sauvegarde tes fichiers avant !**
@@ -39,21 +39,21 @@ secours, et des raccourcis pratiques.
   qu'administrateur** pour que l'étape "démarrage sans clé USB" fonctionne
   (modification de la partition système / `bcdedit`).
 
-## 🌿 Branches
+## <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f33f.png" width="22" height="22" align="absmiddle"> Branches
 
 | Branche | Pour quel processeur ? | Microcode installé |
 |---|---|---|
 | `amd64-x86` (celle-ci) | AMD | `amd-ucode` |
 | `intel64-x86` | Intel | `intel-ucode` |
 
-## 🚀 Utilisation
+## <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f680.png" width="22" height="22" align="absmiddle"> Utilisation
 
-### 0. 📦 Obtenir le fichier .exe (deux options)
+### 0. <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f4e6.png" width="18" height="18" align="absmiddle"> Obtenir le fichier .exe (deux options)
 
 **Option A — GitHub Actions (automatique) :** chaque push déclenche le
 workflow `.github/workflows/build-exe.yml`, qui compile l'application sur un
 runner Windows. Va dans l'onglet **Actions** du dépôt → dernier run
-**"🐧 Build ArchInstallerFritax.exe"** → télécharge l'artifact
+**"<img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f427.png" width="16" height="16" align="absmiddle"> Build ArchInstallerFritax.exe"** → télécharge l'artifact
 `ArchInstallerFritax-<branche>.exe`.
 
 **Option B — Compiler toi-même sur Windows :**
@@ -82,12 +82,12 @@ python ArchInstallerFritax.py
 ```
 
 L'application va :
-1. 📡 Télécharger l'ISO officielle Arch Linux
-2. 🎨 La personnaliser (nom de PC `PC-de-Fritax`, utilisateur `fritaxdev`)
-3. 🥾 Préparer une entrée de démarrage `Fritax - Installer Arch Linux`
+1. <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f4e1.png" width="16" height="16" align="absmiddle"> Télécharger l'ISO officielle Arch Linux
+2. <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f3a8.png" width="16" height="16" align="absmiddle"> La personnaliser (nom de PC `PC-de-Fritax`, utilisateur `fritaxdev`)
+3. <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f97e.png" width="16" height="16" align="absmiddle"> Préparer une entrée de démarrage `Fritax - Installer Arch Linux`
    directement depuis le disque dur (technique GRUB "loopback", pas besoin
    de clé USB)
-4. 🌧️ Afficher une pluie Matrix + barre de progression pendant les étapes
+4. <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f327.png" width="16" height="16" align="absmiddle"> Afficher une pluie Matrix + barre de progression pendant les étapes
    longues, avec le message *"Nous installons votre système... (et dis
    merci à eden :3)"*
 
@@ -108,14 +108,14 @@ bash scripts/install_arch.sh         # installation complète (partitionnement,
 Une confirmation explicite (`OUI EFFACER`) est demandée avant tout
 effacement de disque.
 
-### 3. 🚑 Système de secours
+### 3. <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f691.png" width="18" height="18" align="absmiddle"> Système de secours
 
 Une partition dédiée (`Fritax-Secours`, 4 Gio par défaut) contenant un mini
 Arch de réparation est automatiquement créée, avec sa propre entrée dans le
 menu GRUB (`fritax-secours`). Si l'installation principale casse, choisis
 cette entrée pour réparer (chroot, réinstaller GRUB, etc.).
 
-### 4. 🔧 Raccourcis une fois Arch installé
+### 4. <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f527.png" width="18" height="18" align="absmiddle"> Raccourcis une fois Arch installé
 
 Un script `raccourcis-fritax.sh` est déposé dans le dossier personnel de
 `fritaxdev` : un petit menu en français pour les commandes courantes
@@ -125,7 +125,7 @@ Un script `raccourcis-fritax.sh` est déposé dans le dossier personnel de
 bash ~/raccourcis-fritax.sh
 ```
 
-## 📁 Structure du projet
+## <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f4c1.png" width="22" height="22" align="absmiddle"> Structure du projet
 
 ```
 windows_installer/       Application Windows (Tkinter)
