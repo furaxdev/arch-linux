@@ -11,9 +11,23 @@ from config import ARCH_MIRROR_ISO_URL, ARCH_MIRROR_CHECKSUM_URL, ISO_DOWNLOAD_P
 def telecharger_iso(progress_callback=None):
     """Télécharge l'ISO officielle Arch Linux (aucune modification à ce stade).
 
+    Si une ISO valide est déjà présente (même somme de contrôle que celle
+    publiée sur le miroir), le téléchargement est sauté.
+
     progress_callback(percent: float, texte: str) est appelé régulièrement.
     """
     os.makedirs(WORKDIR, exist_ok=True)
+
+    if os.path.isfile(ISO_DOWNLOAD_PATH):
+        if progress_callback:
+            progress_callback(0, "🔎 ISO déjà présente, vérification...")
+        ok, _ = verifier_checksum(ISO_DOWNLOAD_PATH)
+        if ok:
+            if progress_callback:
+                progress_callback(100, "✅ ISO déjà téléchargée et valide, on saute cette étape !")
+            return ISO_DOWNLOAD_PATH
+        # Pas valide (corrompue ou nouvelle ISO mensuelle) -> on la retélécharge
+        os.remove(ISO_DOWNLOAD_PATH)
 
     if progress_callback:
         progress_callback(0, "📡 Connexion au miroir Arch Linux...")
