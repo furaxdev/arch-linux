@@ -1,0 +1,7 @@
+# Aucune dépendance Python externe : tout repose sur la bibliothèque standard
+# (tkinter, urllib, subprocess, hashlib).
+#
+# Outils externes nécessaires sur la machine Windows :
+#   - 7-Zip            https://www.7-zip.org/           (extraction/reconstruction de l'ISO)
+#   - Windows ADK       (Deployment Tools / oscdimg.exe) https://learn.microsoft.com/windows-hardware/get-started/adk-install
+#   - Python 3.9+       https://www.python.org/downloads/windows/
