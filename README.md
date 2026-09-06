@@ -5,6 +5,28 @@ Aspire 5560 series (model no. MS2319), **sans clé USB**, avec une interface
 Windows en français, une pluie Matrix pendant l'installation, un système de
 secours, et des raccourcis pratiques.
 
+<p>
+  <a href="https://github.com/furaxdev/arch-linux/releases">
+    <img alt="Dernière release" src="https://img.shields.io/github/v/release/furaxdev/arch-linux?style=for-the-badge&label=latest%20release&color=1793D1&labelColor=333333">
+  </a>
+  <a href="https://github.com/furaxdev/arch-linux/actions/workflows/build-exe.yml">
+    <img alt="Build .exe" src="https://img.shields.io/github/actions/workflow/status/furaxdev/arch-linux/build-exe.yml?branch=amd64-x86&style=for-the-badge&label=build%20.exe&labelColor=333333">
+  </a>
+  <a href="https://fritax-arch-setup.vercel.app">
+    <img alt="Site vitrine" src="https://img.shields.io/badge/site-vitrine-1793D1?style=for-the-badge&logo=vercel&labelColor=333333">
+  </a>
+  <a href="https://github.com/furaxdev/arch-linux">
+    <img alt="Star ce dépôt" src="https://img.shields.io/github/stars/furaxdev/arch-linux?style=for-the-badge&logo=github&label=star%20this%20repo&color=2ea44f&labelColor=333333">
+  </a>
+</p>
+
+## 👀 Aperçu
+
+<p>
+  <img src="docs/apercu-accueil.svg" width="49%" alt="Écran d'accueil de Fritax Arch Setup">
+  <img src="docs/apercu-installation.svg" width="49%" alt="Écran d'installation avec pluie Matrix">
+</p>
+
 ## ⚠️ Avertissements importants
 
 - Cette installation **efface complètement** le disque choisi, y compris
