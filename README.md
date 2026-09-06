@@ -21,8 +21,8 @@ secours, et des raccourcis pratiques.
 
 | Branche | Pour quel processeur ? | Microcode installé |
 |---|---|---|
-| `amd64-x86` (celle-ci) | AMD | `amd-ucode` |
-| `intel64-x86` | Intel | `intel-ucode` |
+| `amd64-x86` | AMD | `amd-ucode` |
+| `intel64-x86` (celle-ci) | Intel | `intel-ucode` |
 
 ## 🚀 Utilisation
 

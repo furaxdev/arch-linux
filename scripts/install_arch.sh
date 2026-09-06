@@ -14,7 +14,7 @@ set -euo pipefail
 
 HOSTNAME="PC-de-Fritax"
 USERNAME="fritaxdev"
-UCODE_PACKAGE="${UCODE_PACKAGE:-amd-ucode}"   # amd-ucode ou intel-ucode selon la branche
+UCODE_PACKAGE="${UCODE_PACKAGE:-intel-ucode}"   # amd-ucode ou intel-ucode selon la branche
 RESCUE_LABEL="Fritax-Secours"
 RESCUE_SIZE="4GiB"
 

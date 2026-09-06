@@ -8,7 +8,7 @@ USERNAME = "fritaxdev"
 # --- Variante CPU de cette branche ---
 # "amd"   -> branche amd64-x86   (paquet amd-ucode)
 # "intel" -> branche intel64-x86 (paquet intel-ucode)
-CPU_VENDOR = "amd"
+CPU_VENDOR = "intel"
 UCODE_PACKAGE = "amd-ucode" if CPU_VENDOR == "amd" else "intel-ucode"
 
 # --- Téléchargement de l'ISO ---
