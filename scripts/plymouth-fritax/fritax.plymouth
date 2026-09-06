@@ -1,6 +1,6 @@
 [Plymouth Theme]
 Name=Fritax
-Description=Thème de démarrage Fritax Arch Setup
+Description=Spinner hexagonal (adapté de adi1090x/plymouth-themes) + barre de progression
 ModuleName=script
 
 [script]
