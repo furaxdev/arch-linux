@@ -12,6 +12,7 @@ On ne modifie pas le noyau ni les paquets : on ajoute juste un script d'amorçag
 l'utilisateur, sans toucher au reste de l'ISO officielle.
 """
 
+import glob
 import os
 import shutil
 import subprocess
@@ -23,6 +24,7 @@ from config import (
     ISO_EXTRACT_DIR,
     UCODE_PACKAGE,
     USERNAME,
+    WORKDIR,
 )
 
 SEVEN_ZIP_CANDIDATES = [
@@ -57,6 +59,33 @@ echo "N'oublie pas d'installer le microcode : {UCODE_PACKAGE} 🧠"
 """
 
 
+def _trouver_image_efi(extract_dir):
+    """Localise l'image de démarrage EFI, en gérant les deux structures d'ISO Arch.
+
+    Les ISO Arch récentes (2024+) sont passées à systemd-boot et ne contiennent
+    plus 'EFI/archiso/efiboot.img' : 7-Zip extrait alors les images El Torito
+    à part dans un dossier '[BOOT]' (ex: '2-Boot-NoEmul.img', la plus grosse
+    étant l'image EFI). On la copie hors de l'arborescence pour ne pas
+    l'inclure telle quelle (dossier '[BOOT]') dans l'ISO reconstruite.
+    """
+    chemin_classique = os.path.join(extract_dir, "EFI", "archiso", "efiboot.img")
+    if os.path.isfile(chemin_classique):
+        return chemin_classique
+
+    dossier_boot = os.path.join(extract_dir, "[BOOT]")
+    candidats = glob.glob(os.path.join(dossier_boot, "*-Boot-NoEmul.img"))
+    if not candidats:
+        raise FileNotFoundError(
+            "❌ Impossible de trouver l'image de démarrage EFI dans l'ISO extraite."
+        )
+    plus_grosse = max(candidats, key=os.path.getsize)
+
+    efi_img_tmp = os.path.join(WORKDIR, "efiboot_extrait.img")
+    shutil.copy2(plus_grosse, efi_img_tmp)
+    shutil.rmtree(dossier_boot, ignore_errors=True)
+    return efi_img_tmp
+
+
 def personnaliser_iso(progress_callback=None):
     def _log(pct, texte):
         if progress_callback:
@@ -79,7 +108,7 @@ def personnaliser_iso(progress_callback=None):
 
     _log(70, "💿 Reconstruction d'une ISO bootable (BIOS + UEFI)...")
     boot_bin = os.path.join(ISO_EXTRACT_DIR, "boot", "syslinux", "isolinux.bin")
-    efi_img = os.path.join(ISO_EXTRACT_DIR, "EFI", "archiso", "efiboot.img")
+    efi_img = _trouver_image_efi(ISO_EXTRACT_DIR)
     cmd = [
         oscdimg, "-m", "-u2", "-udfver102",
         f"-bootdata:2#p0,e,b{boot_bin}#pEF,e,b{efi_img}",
