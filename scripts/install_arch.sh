@@ -95,7 +95,7 @@ mount "$P3" /mnt/mnt/secours
 
 etape 35 "Installation du système de base (pacstrap) — ça peut prendre un moment ☕"
 pacstrap -K /mnt base linux linux-firmware "$UCODE_PACKAGE" \
-    networkmanager sudo grub efibootmgr sudo vim neofetch cmatrix bash-completion
+    networkmanager sudo grub efibootmgr sudo vim fastfetch cmatrix bash-completion
 
 etape 60 "Génération de la table des systèmes de fichiers (fstab)..."
 genfstab -U /mnt >> /mnt/etc/fstab
