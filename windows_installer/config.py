@@ -36,7 +36,7 @@ SHORTCUTS = [
     ("📦 Installer un logiciel", "sudo pacman -S "),
     ("🧹 Nettoyer le cache des paquets", "sudo pacman -Sc"),
     ("🌐 Afficher l'adresse IP", "ip a"),
-    ("🖥️ Infos système", "neofetch"),
+    ("🖥️ Infos système", "fastfetch"),
     ("🩹 Réparer les paquets", "sudo pacman -Syyu"),
     ("🚑 Démarrer sur le système de secours", "systemctl reboot --boot-loader-entry=fritax-secours"),
 ]
