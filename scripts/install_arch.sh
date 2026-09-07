@@ -69,11 +69,11 @@ fi
 
 etape 5 "Partitionnement du disque (EFI + racine + secours)..."
 
-parted -s "$DISK" mklabel gpt
-parted -s "$DISK" mkpart ESP fat32 1MiB 513MiB
-parted -s "$DISK" set 1 esp on
-parted -s "$DISK" mkpart primary ext4 513MiB -"$RESCUE_SIZE"
-parted -s "$DISK" mkpart primary ext4 -"$RESCUE_SIZE" 100%
+parted -s "$DISK" -- mklabel gpt
+parted -s "$DISK" -- mkpart ESP fat32 1MiB 513MiB
+parted -s "$DISK" -- set 1 esp on
+parted -s "$DISK" -- mkpart primary ext4 513MiB -"$RESCUE_SIZE"
+parted -s "$DISK" -- mkpart primary ext4 -"$RESCUE_SIZE" 100%
 
 if [[ "$DISK" == *nvme* ]]; then
     P1="${DISK}p1"; P2="${DISK}p2"; P3="${DISK}p3"
