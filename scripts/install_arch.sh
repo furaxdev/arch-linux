@@ -82,9 +82,9 @@ else
 fi
 
 etape 15 "Formatage des partitions..."
-mkfs.fat -F32 "$P1"
-mkfs.ext4 -F -L fritax_root "$P2"
-mkfs.ext4 -F -L "$RESCUE_LABEL" "$P3"
+mkfs.fat -F32 "$P1" >/dev/null
+mkfs.ext4 -F -q -L fritax_root "$P2"
+mkfs.ext4 -F -q -L "$RESCUE_LABEL" "$P3"
 
 etape 25 "Montage des partitions..."
 mount "$P2" /mnt
